@@ -4,7 +4,7 @@
  * @Author: wanglong
  * @Date: 2021-10-21 15:57:51
  * @LastEditors: wanglong
- * @LastEditTime: 2021-11-25 16:52:49
+ * @LastEditTime: 2021-11-29 15:22:29
  * @* : 博虹出品，抄袭必究😄
  */
 import {StyleSheet} from 'react-native';
@@ -24,6 +24,7 @@ const styles = StyleSheet.create({
     genderSelect: {
       alignItems: 'center',
       marginTop: pxToDp(20),
+      marginBottom: pxToDp(20),
       headerBox: {
         flexDirection: 'row',
         width: '60%',
@@ -42,7 +43,7 @@ const styles = StyleSheet.create({
     userInfo: {
       nickname: {
         borderBottomWidth: pxToDp(0.1),
-        color: '#999',
+        color: '#666',
       },
       birthday: {
         borderBottomWidth: pxToDp(0.1),

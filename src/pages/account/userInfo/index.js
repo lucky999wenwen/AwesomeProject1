@@ -4,22 +4,25 @@
  * @Author: wanglong
  * @Date: 2021-10-21 14:20:10
  * @LastEditors: wanglong
- * @LastEditTime: 2021-11-25 17:00:57
+ * @LastEditTime: 2021-11-29 17:25:18
  * @* : 博虹出品，抄袭必究😄
  */
 import React, {Component} from 'react';
-import {View, Text, TouchableOpacity, TouchableHighlight} from 'react-native';
+import {View, Text, TouchableOpacity, Image} from 'react-native';
 import SvgUri from 'react-native-svg-uri';
-import {Provider} from '@ant-design/react-native';
-import {Input} from 'react-native-elements';
+import {Provider, Toast} from '@ant-design/react-native';
+import {Input, Overlay} from 'react-native-elements';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import Picker from 'react-native-picker';
+import ImagePicker from 'react-native-image-crop-picker';
 
 import {pxToDp} from '~/utils/stylesKits';
 import {timeFormat} from '~/utils/time';
-import Geo from '~/utils/Geo';
 import {man, main} from '~/svg/fonts';
+import CityJson from '~/res/citys.json';
 import styles from './styles';
+import Geo from '~/utils/Geo';
 import GButton from '~/components/GButton/index';
 
 export default class Index extends Component {
@@ -40,6 +43,7 @@ export default class Index extends Component {
     lat: '',
     // 详细的地址
     address: '',
+
     showBirthday: false,
   };
 
@@ -61,10 +65,56 @@ export default class Index extends Component {
   showDatePicker = showBirthday => {
     this.setState({showBirthday});
   };
+  showAddressPicker = () => {
+    Picker.init({
+      pickerData: CityJson,
+      pickerBg: [255, 255, 255, 1], //背景颜色
+      pickerToolBarBg: [232, 232, 232, 1], //头部背景颜色
+      pickerConfirmBtnColor: [10, 10, 10, 1],
+      pickerCancelBtnColor: [10, 10, 10, 1],
+      selectedValue: ['北京', '北京'],
+      wheelFlex: [1, 1, 0], // 显示省和市
+      pickerConfirmBtnText: '确定',
+      pickerCancelBtnText: '取消',
+      pickerTitleText: '选择城市',
+      onPickerConfirm: data => {
+        // data =  [广东，广州，天河]
+        this.setState({
+          address: data[1],
+        });
+      },
+    });
+    Picker.show();
+  };
+
+  //提交注册
+  submit = async () => {
+    const {nickname, birthday, address} = this.state;
+    if (!nickname) {
+      Toast.offline('请输入昵称');
+      return;
+    }
+    if (!birthday) {
+      Toast.offline('请选择生日');
+      return;
+    }
+    if (!address) {
+      Toast.offline('请选择或者开启定位');
+      return;
+    }
+
+    const image = await ImagePicker.openPicker({
+      width: 300,
+      height: 400,
+      cropping: true,
+    });
+  };
 
   async componentDidMount() {
     const data = await Geo.getCityByLocation();
-    this.setState({address: data.regeocode.addressComponent.city});
+    this.setState({
+      address: data.regeocode.addressComponent.city.replace('市', ''),
+    });
   }
 
   render() {
@@ -149,18 +199,20 @@ export default class Index extends Component {
 
             {/* 选择城市 start*/}
             <View style={{height: pxToDp(50)}}>
-              <Input
-                placeholder="选择城市"
-                value={address}
-                disabled
-                disabledInputStyle={{
-                  color: '#030004',
-                }}
-                rightIcon={<Icon name="angle-down" size={24} color="#999" />}
-                style={{
-                  ...styles.userBox.userInfo.address,
-                }}
-              />
+              <TouchableOpacity onPress={this.showAddressPicker}>
+                <Input
+                  placeholder="选择城市"
+                  value={'自动定位:' + address}
+                  disabled
+                  disabledInputStyle={{
+                    color: '#666',
+                  }}
+                  rightIcon={<Icon name="angle-down" size={24} color="#999" />}
+                  style={{
+                    ...styles.userBox.userInfo.address,
+                  }}
+                />
+              </TouchableOpacity>
             </View>
             {/* 选择城市 end*/}
           </View>
@@ -172,9 +224,34 @@ export default class Index extends Component {
                 height: pxToDp(40),
                 borderRadius: pxToDp(20),
                 marginTop: pxToDp(70),
-              }}>
-              提交
+              }}
+              onPress={this.submit}>
+              设置头像
             </GButton>
+          </View>
+          <View>
+            <Overlay isVisible={true}>
+              <View
+                style={{
+                  position: 'relative',
+                  width: pxToDp(224),
+                  height: pxToDp(224),
+                  backgroundColor: '#000',
+                }}>
+                <Image
+                  style={{
+                    position: 'absolute',
+                    left: 0,
+                    top: 0,
+                    width: '100%',
+                    height: '100%',
+                  }}
+                  source={require('~/res/scan.gif')}
+                />
+              </View>
+
+              {/* <Text>Hello from Overlay!</Text> */}
+            </Overlay>
           </View>
         </View>
       </Provider>
