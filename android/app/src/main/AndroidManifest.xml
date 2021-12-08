@@ -1,4 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
   package="com.awesomeproject">
   <meta-data android:name="com.amap.api.v2.apikey" android:value="353e3320b324fba1865a7264a44b7534" ></meta-data>
 
@@ -10,6 +11,7 @@
       android:icon="@mipmap/ic_launcher"
       android:roundIcon="@mipmap/ic_launcher_round"
       android:allowBackup="false"
+      tools:replace="android:allowBackup"
       android:theme="@style/AppTheme">
       <activity
         android:name=".MainActivity"
@@ -21,6 +23,11 @@
             <action android:name="android.intent.action.MAIN" />
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
-      </activity>
+
+        </activity>
+        <!-- 极光的配置 -->
+          <meta-data android:name="JPUSH_CHANNEL" android:value="${APP_CHANNEL}" />
+          <meta-data android:name="JPUSH_APPKEY" android:value="${JPUSH_APPKEY}" />
+        <!-- 极光的配置 -->
     </application>
 </manifest>

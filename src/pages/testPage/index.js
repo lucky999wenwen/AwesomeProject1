@@ -1,35 +1,61 @@
+/*
+ * @Descripttion:
+ * @version:
+ * @Author: wanglong
+ * @Date: 2021-10-21 10:36:50
+ * @LastEditors: wanglong
+ * @LastEditTime: 2021-12-08 10:42:29
+ * @* : 博虹出品，抄袭必究😄
+ */
 import React from 'react';
-import {View} from 'react-native';
-import {DatePicker, List, Provider} from '@ant-design/react-native';
-// const now = new Date();
-export default class PopupExample extends React.Component {
-  constructor(props) {
-    super(props);
-    this.onChange = value => {
-      this.setState({value});
-    };
-    this.state = {
-      value: undefined,
-    };
+import {View, Text} from 'react-native';
+import JMessage from 'jmessage-react-plugin';
+class App extends React.Component {
+  componentDidMount() {
+    JMessage.init({
+      appkey: 'ecbbbf33e07a5ed21559f49a',
+      isOpenMessageRoaming: true,
+      isProduction: true,
+      channel: '',
+    });
+    JMessage.setDebugMode({enable: true});
+    console.log(JMessage);
+
+    JMessage.register(
+      {
+        username: '18665711956',
+        password: '18665711956',
+      },
+      res => {
+        console.log('注册成功');
+        console.log(res);
+      },
+      err => {
+        console.log('注册失败');
+        console.log(err);
+      },
+    );
+    // JMessage.login(
+    //   {
+    //     username: '18665711956',
+    //     password: '18665711956',
+    //   },
+    //   res => {
+    //     console.log('登录成功');
+    //     console.log(res);
+    //   },
+    //   err => {
+    //     console.log('登录失败');
+    //     console.log(err);
+    //   },
+    // );
   }
   render() {
     return (
-      <Provider>
-        <View>
-          <List>
-            <DatePicker
-              value={this.state.value}
-              mode="date"
-              defaultDate={new Date()}
-              minDate={new Date(2015, 7, 6)}
-              maxDate={new Date(2026, 11, 3)}
-              onChange={this.onChange}
-              format="YYYY-MM-DD">
-              <List.Item arrow="horizontal">Select Date</List.Item>
-            </DatePicker>
-          </List>
-        </View>
-      </Provider>
+      <View>
+        <Text>goods</Text>
+      </View>
     );
   }
 }
+export default App;

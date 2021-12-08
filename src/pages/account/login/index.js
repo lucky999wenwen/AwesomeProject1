@@ -4,7 +4,7 @@
  * @Author: wanglong
  * @Date: 2021-10-15 09:52:19
  * @LastEditors: wanglong
- * @LastEditTime: 2021-11-25 14:18:28
+ * @LastEditTime: 2021-12-08 15:14:01
  * @* : 博虹出品，抄袭必究😄
  */
 import React, {Component} from 'react';
@@ -13,6 +13,8 @@ import {Provider} from '@ant-design/react-native';
 import {Toast} from '@ant-design/react-native';
 import {CodeField, Cursor} from 'react-native-confirmation-code-field';
 import {Input} from 'react-native-elements';
+import {inject, observer} from 'mobx-react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {pxToDp} from '~/utils/stylesKits';
 import validator from '~/utils/validator';
@@ -37,7 +39,8 @@ const styles = StyleSheet.create({
     borderColor: '#7d53ea',
   },
 });
-
+@inject('store') // 注入 用来获取 全局数据的
+@observer //  当全局发生改变了  组件的重新渲染 从而显示最新的数据
 export default class Index extends Component {
   state = {
     phoneNumber: '15585398636',
@@ -102,11 +105,21 @@ export default class Index extends Component {
         phone: phoneNumber,
         vcode: vCodeText,
       }).then(res => {
+        this.props.store.setUserInfo(phoneNumber, res.data.token, res.data.id);
+        AsyncStorage.setItem(
+          'userInfo',
+          JSON.stringify({
+            phone: phoneNumber,
+            token: res.data.token,
+            userId: res.data.id,
+          }),
+        );
         if (res.data.isNew) {
           //新用户
           this.props.navigation.navigate('UserInfo');
         } else {
           //老用户
+          this.props.navigation.navigate('tabBar');
         }
         // console.log(this.props.navigation.navigate());
       });

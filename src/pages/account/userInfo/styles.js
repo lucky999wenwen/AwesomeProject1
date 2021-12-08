@@ -4,7 +4,7 @@
  * @Author: wanglong
  * @Date: 2021-10-21 15:57:51
  * @LastEditors: wanglong
- * @LastEditTime: 2021-11-29 15:22:29
+ * @LastEditTime: 2021-12-01 14:50:40
  * @* : 博虹出品，抄袭必究😄
  */
 import {StyleSheet} from 'react-native';
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
       birthday: {
         borderBottomWidth: pxToDp(0.1),
       },
-      address: {
+      city: {
         height: pxToDp(50),
         borderBottomWidth: pxToDp(0.1),
       },

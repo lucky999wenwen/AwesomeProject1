@@ -4,14 +4,15 @@
  * @Author: wanglong
  * @Date: 2021-10-18 16:20:07
  * @LastEditors: wanglong
- * @LastEditTime: 2021-10-20 16:08:16
+ * @LastEditTime: 2021-12-01 15:39:25
  * @* : 博虹出品，抄袭必究😄
  */
 import axios from 'axios';
 import {BASE_URI} from './pathMap';
 import {Toast} from '@ant-design/react-native';
-var toastKey = '';
+import store from '~/mobx';
 
+var toastKey = '';
 const service = axios.create({
   baseURL: BASE_URI,
 });
@@ -19,6 +20,9 @@ const service = axios.create({
 service.interceptors.request.use(
   config => {
     toastKey = Toast.loading('加载中...', 0);
+    if (store.token) {
+      config.headers['Authorization'] = `Bearer ${store.token}`;
+    }
     return config;
   },
   error => {

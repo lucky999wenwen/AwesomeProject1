@@ -4,7 +4,7 @@
  * @Author: wanglong
  * @Date: 2021-10-21 14:20:10
  * @LastEditors: wanglong
- * @LastEditTime: 2021-11-29 17:25:18
+ * @LastEditTime: 2021-12-08 11:17:27
  * @* : 博虹出品，抄袭必究😄
  */
 import React, {Component} from 'react';
@@ -16,15 +16,23 @@ import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Picker from 'react-native-picker';
 import ImagePicker from 'react-native-image-crop-picker';
+import {inject, observer} from 'mobx-react';
 
 import {pxToDp} from '~/utils/stylesKits';
 import {timeFormat} from '~/utils/time';
 import {man, main} from '~/svg/fonts';
 import CityJson from '~/res/citys.json';
+import {loginReginfoHead} from '~/api/fileUplpad';
+import {loginReginfo} from '~/api/user';
+import JMessage from '~/utils/JMessage';
+
 import styles from './styles';
 import Geo from '~/utils/Geo';
 import GButton from '~/components/GButton/index';
+import ModalMe from '~/components/ModalMe/index';
 
+@inject('store') // 注入 用来获取 全局数据的
+@observer //  当全局发生改变了  组件的重新渲染 从而显示最新的数据
 export default class Index extends Component {
   state = {
     // 昵称
@@ -45,6 +53,8 @@ export default class Index extends Component {
     address: '',
 
     showBirthday: false,
+    modalVisible: false,
+    path: null,
   };
 
   //切换性别
@@ -57,7 +67,6 @@ export default class Index extends Component {
     this.setState({birthday});
   };
   okBirthday = data => {
-    console.log(timeFormat(data));
     this.showDatePicker(false);
     this.setState({birthday: timeFormat(data)});
   };
@@ -65,7 +74,7 @@ export default class Index extends Component {
   showDatePicker = showBirthday => {
     this.setState({showBirthday});
   };
-  showAddressPicker = () => {
+  showCityPicker = () => {
     Picker.init({
       pickerData: CityJson,
       pickerBg: [255, 255, 255, 1], //背景颜色
@@ -102,23 +111,82 @@ export default class Index extends Component {
       Toast.offline('请选择或者开启定位');
       return;
     }
-
     const image = await ImagePicker.openPicker({
       width: 300,
       height: 400,
       cropping: true,
     });
+    // console.log(image);
+    this.setState({path: image.path});
+    this.setState({modalVisible: true});
+    let formData = new FormData();
+    formData.append('headPhoto', {
+      //本地图片的地址
+      uri: image.path,
+      type: image.mime,
+      name: image.path.split('/').pop(),
+    });
+    loginReginfoHead(formData)
+      .then(res => {
+        this.setState(
+          {
+            header: res.data.headImgPath,
+          },
+          () => {
+            this.userRegister();
+          },
+        );
+      })
+      .catch(err => {
+        this.setState({modalVisible: false});
+      });
+  };
+
+  userRegister = () => {
+    let data = {
+      nickname: this.state.nickname,
+      gender: this.state.gender,
+      birthday: this.state.birthday,
+      city: this.state.city,
+      header: this.state.header,
+      lng: this.state.lng,
+      lat: this.state.lat,
+      address: this.state.address,
+    };
+    loginReginfo(data).then(res => {
+      this.JMessageRegister(this.props.store.userId, this.props.store.phone);
+    });
+  };
+  //极光注册
+  JMessageRegister = (username, password) => {
+    JMessage.register(username, password)
+      .then(res => {
+        Toast.success('注册成功');
+        setTimeout(() => {}, 3000);
+      })
+      .catch(err => {
+        Toast.offline('注册失败');
+      });
   };
 
   async componentDidMount() {
     const data = await Geo.getCityByLocation();
+
     this.setState({
-      address: data.regeocode.addressComponent.city.replace('市', ''),
+      city: data.regeocode.addressComponent.city.replace('市', ''),
     });
+    this.setState({
+      address: data.regeocode.formatted_address,
+    });
+    let locationArr =
+      data.regeocode.addressComponent.streetNumber.location.split(',');
+    this.setState({lng: locationArr[0]});
+    this.setState({lat: locationArr[1]});
   }
 
   render() {
-    const {gender, address, showBirthday} = this.state;
+    const {gender, address, showBirthday, modalVisible, path, city} =
+      this.state;
     return (
       <Provider>
         <View style={{...styles.userBox}}>
@@ -199,17 +267,17 @@ export default class Index extends Component {
 
             {/* 选择城市 start*/}
             <View style={{height: pxToDp(50)}}>
-              <TouchableOpacity onPress={this.showAddressPicker}>
+              <TouchableOpacity onPress={this.showCityPicker}>
                 <Input
                   placeholder="选择城市"
-                  value={'自动定位:' + address}
+                  value={'自动定位:' + city}
                   disabled
                   disabledInputStyle={{
                     color: '#666',
                   }}
                   rightIcon={<Icon name="angle-down" size={24} color="#999" />}
                   style={{
-                    ...styles.userBox.userInfo.address,
+                    ...styles.userBox.userInfo.city,
                   }}
                 />
               </TouchableOpacity>
@@ -229,31 +297,39 @@ export default class Index extends Component {
               设置头像
             </GButton>
           </View>
-          <View>
-            <Overlay isVisible={true}>
-              <View
-                style={{
-                  position: 'relative',
-                  width: pxToDp(224),
-                  height: pxToDp(224),
-                  backgroundColor: '#000',
-                }}>
-                <Image
-                  style={{
-                    position: 'absolute',
-                    left: 0,
-                    top: 0,
-                    width: '100%',
-                    height: '100%',
-                  }}
-                  source={require('~/res/scan.gif')}
-                />
-              </View>
-
-              {/* <Text>Hello from Overlay!</Text> */}
-            </Overlay>
-          </View>
         </View>
+        <ModalMe visible={modalVisible}>
+          <View
+            style={{
+              position: 'relative',
+              width: pxToDp(224),
+              height: pxToDp(224),
+              backgroundColor: '#000',
+            }}>
+            <Image
+              style={{
+                position: 'absolute',
+                left: 0,
+                top: 0,
+                width: '100%',
+                height: '100%',
+                zIndex: 2,
+              }}
+              source={require('~/res/scan.gif')}
+            />
+            <Image
+              style={{
+                position: 'absolute',
+                left: '20%',
+                top: '23%',
+                width: '60%',
+                height: '60%',
+                zIndex: 1,
+              }}
+              source={{uri: path}}
+            />
+          </View>
+        </ModalMe>
       </Provider>
     );
   }
