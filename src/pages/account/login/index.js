@@ -4,7 +4,7 @@
  * @Author: wanglong
  * @Date: 2021-10-15 09:52:19
  * @LastEditors: wanglong
- * @LastEditTime: 2021-12-08 15:14:01
+ * @LastEditTime: 2021-12-09 17:03:29
  * @* : 博虹出品，抄袭必究😄
  */
 import React, {Component} from 'react';
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
 @observer //  当全局发生改变了  组件的重新渲染 从而显示最新的数据
 export default class Index extends Component {
   state = {
-    phoneNumber: '15585398636',
+    phoneNumber: '18665711978',
     // 手机号码校验
     phoneValid: true,
     //是否显示输入验证码
