@@ -4,7 +4,7 @@
  * @Author: wanglong
  * @Date: 2021-10-18 16:20:07
  * @LastEditors: wanglong
- * @LastEditTime: 2021-12-01 15:39:25
+ * @LastEditTime: 2021-12-16 15:26:56
  * @* : 博虹出品，抄袭必究😄
  */
 import axios from 'axios';
@@ -33,9 +33,12 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   response => {
     const res = response.data;
-    Toast.remove(toastKey);
+    Toast.removeAll();
     if (res.code == 10000) {
       return res;
+    } else {
+      Toast.fail(res.msg, 2);
+      return Promise.reject(res);
     }
   },
   error => {

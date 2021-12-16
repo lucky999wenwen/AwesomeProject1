@@ -4,7 +4,7 @@
  * @Author: wanglong
  * @Date: 2021-12-09 16:57:33
  * @LastEditors: wanglong
- * @LastEditTime: 2021-12-09 17:26:41
+ * @LastEditTime: 2021-12-16 16:35:43
  * @* : 博虹出品，抄袭必究😄
  */
 import React, {Component} from 'react';
@@ -35,6 +35,8 @@ export default class Index extends Component {
           flexDirection: 'row',
           marginTop: pxToDp(20),
           alignItems: 'center',
+          paddingBottom: pxToDp(10),
+          paddingTop: pxToDp(5),
         }}>
         <Text
           numberOfLines={1}
