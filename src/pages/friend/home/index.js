@@ -4,7 +4,7 @@
  * @Author: wanglong
  * @Date: 2021-12-08 11:50:46
  * @LastEditors: wanglong
- * @LastEditTime: 2021-12-16 17:14:29
+ * @LastEditTime: 2021-12-22 15:29:27
  * @* : 博虹出品，抄袭必究😄
  */
 import React, {Component} from 'react';
@@ -13,9 +13,11 @@ import HeaderImageScrollView from 'react-native-image-header-scroll-view';
 import {Provider, Toast} from '@ant-design/react-native';
 
 import {pxToDp} from '~/utils/stylesKits';
+import ModalMe from '~/components/ModalMe/index';
 import FriendHead from './components/FriendHead';
 import Visitors from './components/Visitors';
 import PerfectGirl from './components/PerfectGirl';
+import FilterPanel from './components/FilterPanel';
 
 import {getRecommendation} from '~/api/friends';
 import {BASE_URI} from '~/utils/pathMap';
@@ -35,6 +37,7 @@ export default class Index extends Component {
     },
     // 推荐朋友 数组
     recommends: [],
+    modalVisible: false,
   };
 
   // 获取推荐朋友
@@ -43,11 +46,21 @@ export default class Index extends Component {
       this.setState({recommends: res.data});
     });
   };
+
+  //
+  recommendFilterShow = () => {
+    console.log(11);
+    this.setState({modalVisible: true});
+  };
+
   componentDidMount() {
     this.getRecommends();
   }
   render() {
-    const {recommends} = this.state;
+    const {recommends, modalVisible, params} = this.state;
+    let param = {...params};
+    delete param['page'];
+    delete param['pagesize'];
     return (
       <Provider>
         <HeaderImageScrollView
@@ -168,6 +181,15 @@ export default class Index extends Component {
             {/* 2.0 推荐朋友 结束 */}
           </View>
         </HeaderImageScrollView>
+
+        <ModalMe
+          visible={modalVisible}
+          childrenStyle={{justifyContent: 'flex-end'}}>
+          <FilterPanel
+            onClose={() => this.setState({modalVisible: false})}
+            params={param}
+          />
+        </ModalMe>
       </Provider>
     );
   }

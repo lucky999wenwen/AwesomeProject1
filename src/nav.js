@@ -4,7 +4,7 @@
  * @Author: wanglong
  * @Date: 2021-10-14 17:26:47
  * @LastEditors: wanglong
- * @LastEditTime: 2021-12-08 15:14:47
+ * @LastEditTime: 2021-12-22 11:46:38
  * @* : 博虹出品，抄袭必究😄
  */
 import React, {Component} from 'react';
@@ -25,6 +25,7 @@ export default class Nav extends Component {
     this.state = {
       //判断是否是已经登录过了
       initialRouteName: this.props.store.token ? 'tabBar' : 'Login',
+      // initialRouteName: 'Login',
     };
   }
   render() {

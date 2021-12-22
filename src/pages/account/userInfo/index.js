@@ -4,7 +4,7 @@
  * @Author: wanglong
  * @Date: 2021-10-21 14:20:10
  * @LastEditors: wanglong
- * @LastEditTime: 2021-12-08 11:17:27
+ * @LastEditTime: 2021-12-22 11:36:40
  * @* : 博虹出品，抄袭必究😄
  */
 import React, {Component} from 'react';
@@ -128,6 +128,7 @@ export default class Index extends Component {
     });
     loginReginfoHead(formData)
       .then(res => {
+        console.log(res, '头像');
         this.setState(
           {
             header: res.data.headImgPath,

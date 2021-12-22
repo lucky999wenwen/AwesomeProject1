@@ -4,7 +4,7 @@
  * @Author: wanglong
  * @Date: 2021-11-30 16:53:58
  * @LastEditors: wanglong
- * @LastEditTime: 2021-12-01 09:59:04
+ * @LastEditTime: 2021-12-22 15:19:01
  * @* : 博虹出品，抄袭必究😄
  */
 import React, {Component} from 'react';
@@ -17,8 +17,8 @@ export default class Index extends Component {
     animationType: 'fade',
     transparent: true,
     visible: false,
-    zIndex: 1024,
-    justifyContent: 'center',
+    zIndex: 9999999999,
+    childrenStyle: {},
   };
 
   //安卓的返回按钮点击触发
@@ -36,7 +36,8 @@ export default class Index extends Component {
   };
 
   render() {
-    const {animationType, transparent, zIndex, style, visible} = this.props;
+    const {animationType, transparent, zIndex, style, visible, childrenStyle} =
+      this.props;
     return (
       <>
         {visible ? (
@@ -51,6 +52,7 @@ export default class Index extends Component {
               ...style,
             }}>
             <Modal
+              hardwareAccelerated={true}
               animationType={animationType}
               transparent={transparent}
               onRequestClose={this.onRequestClose}
@@ -62,6 +64,7 @@ export default class Index extends Component {
                   height: '100%',
                   alignItems: 'center',
                   justifyContent: 'center',
+                  ...childrenStyle,
                 }}>
                 {this.props.children}
               </View>
