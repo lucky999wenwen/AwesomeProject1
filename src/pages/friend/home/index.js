@@ -4,7 +4,7 @@
  * @Author: wanglong
  * @Date: 2021-12-08 11:50:46
  * @LastEditors: wanglong
- * @LastEditTime: 2021-12-22 15:29:27
+ * @LastEditTime: 2021-12-27 14:02:24
  * @* : 博虹出品，抄袭必究😄
  */
 import React, {Component} from 'react';
@@ -46,10 +46,16 @@ export default class Index extends Component {
       this.setState({recommends: res.data});
     });
   };
+  searchGet = params => {
+    let data = {...params, page: 1, pagesize: 100};
+    this.setState({params: data}, () => {
+      this.getRecommends();
+      this.setState({modalVisible: false});
+    });
+  };
 
   //
   recommendFilterShow = () => {
-    console.log(11);
     this.setState({modalVisible: true});
   };
 
@@ -187,6 +193,7 @@ export default class Index extends Component {
           childrenStyle={{justifyContent: 'flex-end'}}>
           <FilterPanel
             onClose={() => this.setState({modalVisible: false})}
+            searchGet={data => this.searchGet(data)}
             params={param}
           />
         </ModalMe>

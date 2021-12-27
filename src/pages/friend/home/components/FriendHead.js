@@ -4,7 +4,7 @@
  * @Author: wanglong
  * @Date: 2021-12-09 16:22:07
  * @LastEditors: wanglong
- * @LastEditTime: 2021-12-09 17:02:24
+ * @LastEditTime: 2021-12-27 14:55:40
  * @* : 博虹出品，抄袭必究😄
  */
 import React, {Component} from 'react';
@@ -12,7 +12,9 @@ import {View, Text, TouchableOpacity} from 'react-native';
 import {pxToDp} from '~/utils/stylesKits';
 import Svg from 'react-native-svg-uri';
 import {tanhua, near, testSoul} from '~/res/fonts/iconSvg';
+import {NavigationContext} from '@react-navigation/native';
 export default class Index extends Component {
+  static contextType = NavigationContext;
   state = {
     btnArr: [
       {
@@ -20,6 +22,7 @@ export default class Index extends Component {
         backgroundColor: '#FC5012',
         svgXmlData: tanhua,
         text: '探花',
+        page: 'TanHua',
       },
       {
         id: 2,
@@ -36,7 +39,11 @@ export default class Index extends Component {
     ],
   };
   toItem = v => {
-    // console.log(v.id);
+    if (v.page) {
+      this.context.navigate(v.page);
+    } else {
+      alert('页面不存在');
+    }
   };
   render() {
     const {btnArr} = this.state;

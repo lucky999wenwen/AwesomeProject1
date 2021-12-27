@@ -4,7 +4,7 @@
  * @Author: wanglong
  * @Date: 2021-12-15 17:27:27
  * @LastEditors: wanglong
- * @LastEditTime: 2021-12-16 17:13:00
+ * @LastEditTime: 2021-12-27 11:54:09
  * @* : 博虹出品，抄袭必究😄
  */
 import React, {Component} from 'react';
@@ -22,7 +22,6 @@ export default class componentName extends Component {
   };
   getData = () => {
     getTodayBest().then(res => {
-      console.log(res, 'res++++');
       this.setState({perfectGirlData: res.data[0]});
     });
   };

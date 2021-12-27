@@ -4,7 +4,7 @@
  * @Author: wanglong
  * @Date: 2021-10-14 17:26:47
  * @LastEditors: wanglong
- * @LastEditTime: 2021-12-22 11:46:38
+ * @LastEditTime: 2021-12-27 14:26:55
  * @* : 博虹出品，抄袭必究😄
  */
 import React, {Component} from 'react';
@@ -14,8 +14,10 @@ import {inject, observer} from 'mobx-react';
 
 import Login from './pages/account/login';
 import UserInfo from './pages/account/userInfo';
-import TestPage from './pages/testPage';
+import TanHua from './pages/friend/tanHua';
+
 import tabBar from './tabBar';
+import TestPage from './pages/testPage';
 const Stack = createStackNavigator();
 @inject('store') // 注入 用来获取 全局数据的
 @observer //  当全局发生改变了  组件的重新渲染 从而显示最新的数据
@@ -47,11 +49,13 @@ export default class Nav extends Component {
             },
           }}
           initialRouteName={initialRouteName}>
-          <Stack.Screen name="Login" component={Login} />
-          <Stack.Screen name="TestPage" component={TestPage} />
           <Stack.Screen name="tabBar" component={tabBar} />
-          {/*用户信息完善 */}
+          <Stack.Screen name="TanHua" component={TanHua} />
+          <Stack.Screen name="TestPage" component={TestPage} />
+          {/*用户信息完善以及登录    start */}
           <Stack.Screen name="UserInfo" component={UserInfo} />
+          <Stack.Screen name="Login" component={Login} />
+          {/*用户信息完善以及登录   end*/}
         </Stack.Navigator>
       </NavigationContainer>
     );
