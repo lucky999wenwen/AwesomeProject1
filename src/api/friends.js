@@ -4,7 +4,7 @@
  * @Author: wanglong
  * @Date: 2021-12-09 16:58:45
  * @LastEditors: wanglong
- * @LastEditTime: 2021-12-27 16:54:25
+ * @LastEditTime: 2021-12-28 11:51:47
  * @* : 博虹出品，抄袭必究😄
  */
 import request from '~/utils/request';
@@ -56,5 +56,18 @@ export function getFriendsCards(params) {
     url: '/friends/cards',
     method: 'get',
     params,
+  });
+}
+
+/**
+ * 探花-喜欢和不喜欢
+ * @param {*}
+ * @returns
+ */
+export function friendsLike(id, type) {
+  return request({
+    url: '/friends/like/' + id + '/' + type,
+    method: 'get',
+    looding: false,
   });
 }
