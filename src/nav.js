@@ -4,7 +4,7 @@
  * @Author: wanglong
  * @Date: 2021-10-14 17:26:47
  * @LastEditors: wanglong
- * @LastEditTime: 2021-12-27 14:26:55
+ * @LastEditTime: 2021-12-30 14:37:21
  * @* : 博虹出品，抄袭必究😄
  */
 import React, {Component} from 'react';
@@ -15,6 +15,7 @@ import {inject, observer} from 'mobx-react';
 import Login from './pages/account/login';
 import UserInfo from './pages/account/userInfo';
 import TanHua from './pages/friend/tanHua';
+import Search from './pages/friend/search';
 
 import tabBar from './tabBar';
 import TestPage from './pages/testPage';
@@ -51,6 +52,7 @@ export default class Nav extends Component {
           initialRouteName={initialRouteName}>
           <Stack.Screen name="tabBar" component={tabBar} />
           <Stack.Screen name="TanHua" component={TanHua} />
+          <Stack.Screen name="Search" component={Search} />
           <Stack.Screen name="TestPage" component={TestPage} />
           {/*用户信息完善以及登录    start */}
           <Stack.Screen name="UserInfo" component={UserInfo} />

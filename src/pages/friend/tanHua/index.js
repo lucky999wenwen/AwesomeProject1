@@ -4,7 +4,7 @@
  * @Author: wanglong
  * @Date: 2021-12-27 14:25:23
  * @LastEditors: wanglong
- * @LastEditTime: 2021-12-28 14:11:29
+ * @LastEditTime: 2021-12-30 09:50:32
  * @* : 博虹出品，抄袭必究😄
  */
 import React, {Component} from 'react';
@@ -57,7 +57,8 @@ export default class Index extends Component {
   onSwipedAll = () => {};
   onSwiped = cardIndex => {
     this.setState({currentIndex: cardIndex + 1}, () => {
-      this.setState({currentIndex: 0});
+      if (this.state.currentIndex == this.state.cards.length)
+        this.setState({currentIndex: 0});
     });
     if (
       cardIndex == this.state.cards.length - 2 &&
@@ -127,7 +128,10 @@ export default class Index extends Component {
                           paddingBottom: pxToDp(15),
                         }}>
                         <View
-                          style={{flexDirection: 'row', alignItems: 'center'}}>
+                          style={{
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                          }}>
                           <Text style={{color: '#555'}}>{card.nick_name}</Text>
                           <IconFont
                             style={{
@@ -162,9 +166,10 @@ export default class Index extends Component {
                 onSwipedRight={() => this.setLike('like', false, 'right')}
                 infinite={true}
                 cardIndex={currentIndex}
-                cardVerticalMargin={0}
+                cardVerticalMargin={30}
                 backgroundColor={'transparent'}
-                stackSize={3}></Swiper>
+                stackSize={3}
+                stackSeparation={-20}></Swiper>
             ) : (
               <></>
             )}

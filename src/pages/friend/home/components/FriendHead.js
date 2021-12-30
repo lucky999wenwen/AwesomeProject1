@@ -4,7 +4,7 @@
  * @Author: wanglong
  * @Date: 2021-12-09 16:22:07
  * @LastEditors: wanglong
- * @LastEditTime: 2021-12-27 14:55:40
+ * @LastEditTime: 2021-12-30 14:37:33
  * @* : 博虹出品，抄袭必究😄
  */
 import React, {Component} from 'react';
@@ -29,6 +29,7 @@ export default class Index extends Component {
         backgroundColor: '#2BB4F8',
         svgXmlData: near,
         text: '搜附近',
+        page: 'Search',
       },
       {
         id: 3,

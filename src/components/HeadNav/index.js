@@ -4,7 +4,7 @@
  * @Author: wanglong
  * @Date: 2021-12-27 15:27:37
  * @LastEditors: wanglong
- * @LastEditTime: 2021-12-27 16:10:53
+ * @LastEditTime: 2021-12-30 14:40:39
  * @* : 博虹出品，抄袭必究😄
  */
 import React, {Component} from 'react';
@@ -26,7 +26,7 @@ export default class Index extends Component {
   render() {
     return (
       <View>
-        <StatusBar backgroundColor="transparent" translucent={true} />
+        <StatusBar backgroundColor={'transparent'} translucent={true} />
         <ImageBackground
           source={require('../../res/headbg.png')}
           style={{

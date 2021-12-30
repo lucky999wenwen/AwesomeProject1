@@ -4,7 +4,7 @@
  * @Author: wanglong
  * @Date: 2021-12-09 16:58:45
  * @LastEditors: wanglong
- * @LastEditTime: 2021-12-28 11:51:47
+ * @LastEditTime: 2021-12-30 14:55:32
  * @* : 博虹出品，抄袭必究😄
  */
 import request from '~/utils/request';
@@ -69,5 +69,17 @@ export function friendsLike(id, type) {
     url: '/friends/like/' + id + '/' + type,
     method: 'get',
     looding: false,
+  });
+}
+/**
+ * 探花-搜附近
+ * @param {*}
+ * @returns
+ */
+export function friendsSearch(params) {
+  return request({
+    url: '/friends/search',
+    method: 'get',
+    params,
   });
 }
