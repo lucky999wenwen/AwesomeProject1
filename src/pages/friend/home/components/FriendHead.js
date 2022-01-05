@@ -4,7 +4,7 @@
  * @Author: wanglong
  * @Date: 2021-12-09 16:22:07
  * @LastEditors: wanglong
- * @LastEditTime: 2021-12-30 14:37:33
+ * @LastEditTime: 2022-01-05 10:04:32
  * @* : 博虹出品，抄袭必究😄
  */
 import React, {Component} from 'react';
@@ -36,6 +36,7 @@ export default class Index extends Component {
         backgroundColor: '#ECC768',
         svgXmlData: testSoul,
         text: '测灵魂',
+        page: 'TestSoul',
       },
     ],
   };

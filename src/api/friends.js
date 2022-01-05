@@ -4,7 +4,7 @@
  * @Author: wanglong
  * @Date: 2021-12-09 16:58:45
  * @LastEditors: wanglong
- * @LastEditTime: 2021-12-30 14:55:32
+ * @LastEditTime: 2022-01-05 11:20:48
  * @* : 博虹出品，抄袭必究😄
  */
 import request from '~/utils/request';
@@ -81,5 +81,29 @@ export function friendsSearch(params) {
     url: '/friends/search',
     method: 'get',
     params,
+  });
+}
+
+/**
+ * 测灵魂-问卷列表
+ * @param {*}
+ * @returns
+ */
+export function friendsQuestions() {
+  return request({
+    url: '/friends/questions',
+    method: 'get',
+  });
+}
+
+/**
+ * 测灵魂 测试题
+ * @param {*}
+ * @returns
+ */
+export function friendsQuestionSection(id) {
+  return request({
+    url: '/friends/questionSection/' + id,
+    method: 'get',
   });
 }

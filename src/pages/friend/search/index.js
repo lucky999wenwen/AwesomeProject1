@@ -171,6 +171,7 @@ export default class componentName extends Component {
           visible={modalVisible}
           childrenStyle={{justifyContent: 'flex-end'}}>
           <FilterPanel
+            title={'搜索'}
             onClose={() => this.setState({modalVisible: false})}
             searchGet={data => this.searchGet(data)}
             params={this.params}

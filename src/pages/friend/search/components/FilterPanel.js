@@ -4,7 +4,7 @@
  * @Author: wanglong
  * @Date: 2021-12-22 14:39:32
  * @LastEditors: wanglong
- * @LastEditTime: 2021-12-30 17:05:53
+ * @LastEditTime: 2022-01-05 09:26:53
  * @* : 博虹出品，抄袭必究😄
  */
 import React, {Component} from 'react';
@@ -17,6 +17,9 @@ import GButton from '~/components/GButton/index';
 
 import {man, main} from '~/svg/fonts';
 export default class Index extends Component {
+  static defaultProps = {
+    title: '标题',
+  };
   constructor(props) {
     super(props);
     this.state = {
@@ -137,6 +140,7 @@ export default class Index extends Component {
   };
 
   render() {
+    const {title} = this.props;
     return (
       <View style={{height: '45%', backgroundColor: '#fff', width: '100%'}}>
         <View
@@ -147,7 +151,7 @@ export default class Index extends Component {
           }}>
           <Text
             style={{color: '#000', fontSize: pxToDp(20), textAlign: 'center'}}>
-            标题
+            {title}
           </Text>
           <IconFont
             name="iconshibai"
