@@ -4,14 +4,26 @@
  * @Author: wanglong
  * @Date: 2022-01-05 11:02:59
  * @LastEditors: wanglong
- * @LastEditTime: 2022-01-28 15:43:41
+ * @LastEditTime: 2022-02-18 15:58:10
  * @* : 博虹出品，抄袭必究😄
  */
 import React, {Component} from 'react';
-import {View, Text, ImageBackground, Image} from 'react-native';
+import {
+  View,
+  Text,
+  ImageBackground,
+  TouchableOpacity,
+  Image,
+} from 'react-native';
+import {inject, observer} from 'mobx-react';
 
-import {friendsQuestionSection as getQuestionsSection} from '~/api/friends';
+import {
+  friendsQuestionSection as getQuestionsSection,
+  friendsQuestionAns,
+} from '~/api/friends';
 import {pxToDp} from '~/utils/stylesKits';
+import {BASE_URI} from '~/utils/pathMap';
+import LinearGradient from 'react-native-linear-gradient';
 
 import HeadNav from '~/components/HeadNav';
 const titles = {
@@ -19,21 +31,40 @@ const titles = {
   2: require('../../../../res/leve2.png'),
   3: require('../../../../res/leve3.png'),
 };
+@inject('store') // 注入 用来获取 全局数据的
+@observer //  当全局发生改变了  组件的重新渲染 从而显示最新的数据
 export default class Index extends Component {
   state = {
     list: [],
     title: '问卷调查',
     type: 1,
-    current: 0,
+    currentIndex: 0,
   };
+  ansList = [];
+  arrCapital = ['一', '二', '三', '四', '五', '六'];
 
   getData = () => {
     getQuestionsSection(this.props.route.params.qid).then(res => {
-      console.log(JSON.stringify(res.data));
       this.setState({
         list: res.data,
       });
     });
+  };
+
+  chooeseAns = v => {
+    const {currentIndex} = this.state;
+    this.ansList.push(v.ans_No);
+    if (currentIndex >= this.state.list.length - 1) {
+      // 最后一个题目选择完成
+      const answers = this.ansList.join(',');
+      friendsQuestionAns(this.props.route.params.qid, {answers}).then(res => {
+        // this.props.navigate
+        // console.log(this.props.navigation);
+        this.props.navigation.replace('TestResult');
+      });
+    } else {
+      this.setState({currentIndex: currentIndex + 1});
+    }
   };
   componentDidMount() {
     this.getData();
@@ -56,8 +87,9 @@ export default class Index extends Component {
   }
 
   render() {
-    const {list, title, type, current} = this.state;
-
+    const {list, title, type, currentIndex} = this.state;
+    const {header} = this.props.store.userInfo;
+    if (!list[currentIndex]) return <></>;
     return (
       <View
         style={{
@@ -83,17 +115,31 @@ export default class Index extends Component {
               style={{
                 height: pxToDp(52),
                 width: pxToDp(66),
+                justifyContent: 'center',
+                alignItems: 'center',
               }}
-              source={require('../../../../res/qatext.png')}></ImageBackground>
+              source={require('../../../../res/qatext.png')}>
+              <Image
+                source={{uri: BASE_URI + header}}
+                style={{
+                  width: pxToDp(46),
+                  height: pxToDp(46),
+                  borderRadius: pxToDp(23),
+                  backgroundColor: '#fff',
+                }}
+              />
+            </ImageBackground>
             <View style={{justifyContent: 'space-around'}}>
-              <Text style={{fontSize: pxToDp(22), color: '#fff'}}>第一题</Text>
+              <Text style={{fontSize: pxToDp(22), color: '#fff'}}>
+                第{this.arrCapital[currentIndex]}题
+              </Text>
               <Text
                 style={{
                   fontSize: pxToDp(12),
                   color: '#f5f5f5',
                   textAlign: 'center',
                 }}>
-                （1/3）
+                （{currentIndex + 1}/{list.length}）
               </Text>
             </View>
             <ImageBackground
@@ -103,10 +149,34 @@ export default class Index extends Component {
               }}
               source={titles[type]}></ImageBackground>
           </View>
-          <View style={{}}>
-            <Text style={{fontSize: pxToDp(22), color: '#fff'}}>
-              {JSON.stringify(list[0])}
+          <View style={{paddingLeft: pxToDp(30), paddingRight: pxToDp(30)}}>
+            <Text
+              style={{
+                fontSize: pxToDp(18),
+                color: '#fff',
+                paddingTop: pxToDp(30),
+              }}>
+              {list[currentIndex].question_title}
             </Text>
+            {list[currentIndex].answers.map((v, i) => (
+              <TouchableOpacity
+                key={i}
+                style={{marginTop: pxToDp(10)}}
+                onPress={() => this.chooeseAns(v)}>
+                <LinearGradient
+                  style={{
+                    height: pxToDp(40),
+                    borderRadius: pxToDp(6),
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                  colors={['#6f45f3', '#6f45f31a']}
+                  start={{x: 0, y: 0}}
+                  end={{x: 1, y: 0}}>
+                  <Text style={{color: '#fff'}}>{v.ans_title}</Text>
+                </LinearGradient>
+              </TouchableOpacity>
+            ))}
           </View>
           {/*两侧图标 end*/}
         </ImageBackground>

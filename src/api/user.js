@@ -4,7 +4,7 @@
  * @Author: wanglong
  * @Date: 2021-10-21 14:09:40
  * @LastEditors: wanglong
- * @LastEditTime: 2021-12-01 14:53:19
+ * @LastEditTime: 2022-02-18 14:16:44
  * @* : 博虹出品，抄袭必究😄
  */
 import request from '~/utils/request';
@@ -45,5 +45,17 @@ export function loginReginfo(data) {
     url: '/user/loginReginfo',
     method: 'post',
     data,
+  });
+}
+
+/**
+ * 登录者个人信息
+ * @param {*}
+ * @returns
+ */
+export function userInfo() {
+  return request({
+    url: '/my/userinfo',
+    method: 'get',
   });
 }

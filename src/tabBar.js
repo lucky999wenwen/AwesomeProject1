@@ -4,7 +4,7 @@
  * @Author: wanglong
  * @Date: 2021-12-08 11:28:15
  * @LastEditors: wanglong
- * @LastEditTime: 2021-12-08 14:22:53
+ * @LastEditTime: 2022-02-18 15:12:58
  * @* : 博虹出品，抄袭必究😄
  */
 import React, {Component} from 'react';
@@ -26,8 +26,17 @@ import Friend from '~/pages/friend/home';
 import Group from '~/pages/group/home';
 import Message from '~/pages/message/home';
 import My from '~/pages/my/home';
+import {userInfo} from '~/api/user';
+import {inject, observer} from 'mobx-react';
 
+@inject('store') // 注入 用来获取 全局数据的
+@observer //  当全局发生改变了  组件的重新渲染 从而显示最新的数据
 export default class Index extends Component {
+  componentDidMount() {
+    userInfo().then(res => {
+      this.props.store.setUser(res.data);
+    });
+  }
   state = {
     selectedTab: 'friend',
     pagesTab: [

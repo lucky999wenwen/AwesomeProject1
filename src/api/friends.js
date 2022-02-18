@@ -4,7 +4,7 @@
  * @Author: wanglong
  * @Date: 2021-12-09 16:58:45
  * @LastEditors: wanglong
- * @LastEditTime: 2022-01-05 11:20:48
+ * @LastEditTime: 2022-02-18 15:51:10
  * @* : 博虹出品，抄袭必究😄
  */
 import request from '~/utils/request';
@@ -105,5 +105,18 @@ export function friendsQuestionSection(id) {
   return request({
     url: '/friends/questionSection/' + id,
     method: 'get',
+  });
+}
+
+/**
+ * 测灵魂 测试题提交
+ * @param {*}
+ * @returns
+ */
+export function friendsQuestionAns(id, data) {
+  return request({
+    url: '/friends/questionsAns/' + id,
+    method: 'post',
+    data,
   });
 }
