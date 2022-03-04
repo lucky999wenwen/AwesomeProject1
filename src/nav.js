@@ -4,7 +4,7 @@
  * @Author: wanglong
  * @Date: 2021-10-14 17:26:47
  * @LastEditors: wanglong
- * @LastEditTime: 2022-02-18 15:55:17
+ * @LastEditTime: 2022-03-03 17:07:46
  * @* : 博虹出品，抄袭必究😄
  */
 import React, {Component} from 'react';
@@ -19,6 +19,7 @@ import Search from './pages/friend/search';
 import TestSoul from './pages/friend/testSoul';
 import TestQA from './pages/friend/testSoul/testQA';
 import TestResult from './pages/friend/testSoul/testResult';
+import Detail from './pages/friend/detail';
 
 import tabBar from './tabBar';
 import TestPage from './pages/testPage';
@@ -59,6 +60,8 @@ export default class Nav extends Component {
           <Stack.Screen name="TestSoul" component={TestSoul} />
           <Stack.Screen name="TestQA" component={TestQA} />
           <Stack.Screen name="TestResult" component={TestResult} />
+          <Stack.Screen name="Detail" component={Detail} />
+
           <Stack.Screen name="TestPage" component={TestPage} />
           {/*用户信息完善以及登录    start */}
           <Stack.Screen name="UserInfo" component={UserInfo} />

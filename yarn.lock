@@ -6479,6 +6479,11 @@ react-native-modal-popover@^2.0.1:
     lodash "^4.17.21"
     prop-types "^15.7.2"
 
+react-native-pager-view@^5.4.11:
+  version "5.4.11"
+  resolved "https://registry.npmmirror.com/react-native-pager-view/-/react-native-pager-view-5.4.11.tgz#677540293c7b4e0e022efb45727ef9b4efa35409"
+  integrity sha512-4QlBL5W8yVjeYwrw89oCdABI7sDxIGapFQvIbukfB5mAj1Zn1IQPkBqROLblNFtQ8PbAeexXRgDT1ENWygiJ7A==
+
 react-native-picker@^4.3.7:
   version "4.3.7"
   resolved "https://registry.npmmirror.com/react-native-picker/download/react-native-picker-4.3.7.tgz#9842e8c62ff0d8b676e9514d9f9172413c0518a8"
@@ -7416,8 +7421,8 @@ table@^5.2.3:
 
 teaset@^0.7.5:
   version "0.7.5"
-  resolved "https://registry.npmmirror.com/teaset/download/teaset-0.7.5.tgz#325f43171326df0303264ca94d39302fc1f874fb"
-  integrity sha1-Ml9DFxMm3wMDJkypTTkwL8H4dPs=
+  resolved "https://registry.npmmirror.com/teaset/-/teaset-0.7.5.tgz#325f43171326df0303264ca94d39302fc1f874fb"
+  integrity sha512-wWCEvJtNmFm1Pcpcjs7+jP7C9sAGx1va1mBT2dUmjkG8IjL/zA/k//Gvd4HyNwNpg5F3Jexwe8K9S1dK42KIgA==
   dependencies:
     prop-types "^15.7.2"
     react-native-legacy-components "^0.1.3"

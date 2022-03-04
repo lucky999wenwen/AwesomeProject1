@@ -4,7 +4,7 @@
  * @Author: wanglong
  * @Date: 2021-12-09 16:58:45
  * @LastEditors: wanglong
- * @LastEditTime: 2022-02-18 15:51:10
+ * @LastEditTime: 2022-03-03 10:41:29
  * @* : 博虹出品，抄袭必究😄
  */
 import request from '~/utils/request';
@@ -118,5 +118,19 @@ export function friendsQuestionAns(id, data) {
     url: '/friends/questionsAns/' + id,
     method: 'post',
     data,
+  });
+}
+
+/**
+ * 详情 朋友信息详情
+ * @param {*}
+ * @returns
+ */
+export function friendsPersonalInfo(id, params) {
+  return request({
+    url: '/friends/personalInfo/' + id,
+    method: 'get',
+    looding: true,
+    params,
   });
 }

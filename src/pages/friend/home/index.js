@@ -4,7 +4,7 @@
  * @Author: wanglong
  * @Date: 2021-12-08 11:50:46
  * @LastEditors: wanglong
- * @LastEditTime: 2021-12-27 14:02:24
+ * @LastEditTime: 2022-03-03 10:09:25
  * @* : 博虹出品，抄袭必究😄
  */
 import React, {Component} from 'react';
@@ -22,8 +22,10 @@ import FilterPanel from './components/FilterPanel';
 import {getRecommendation} from '~/api/friends';
 import {BASE_URI} from '~/utils/pathMap';
 import IconFont from '~/components/IconFont';
+import {NavigationContext} from '@react-navigation/native';
 
 export default class Index extends Component {
+  static contextType = NavigationContext;
   state = {
     // 接口要的数据
     params: {
@@ -54,6 +56,9 @@ export default class Index extends Component {
     });
   };
 
+  toUserDetail = v => {
+    this.context.navigate('Detail', {id: v.id});
+  };
   //
   recommendFilterShow = () => {
     this.setState({modalVisible: true});
@@ -111,8 +116,8 @@ export default class Index extends Component {
               {/* 2.2 列表内容 开始 */}
               <View>
                 {recommends.map((v, i) => (
-                  //  onPress={() => this.context.navigate('Detail', {id: v.id})}
                   <TouchableOpacity
+                    onPress={() => this.toUserDetail(v)}
                     key={i}
                     style={{
                       flexDirection: 'row',

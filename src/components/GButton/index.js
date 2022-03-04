@@ -4,7 +4,7 @@
  * @Author: wanglong
  * @Date: 2021-10-20 16:00:33
  * @LastEditors: wanglong
- * @LastEditTime: 2021-12-27 16:06:49
+ * @LastEditTime: 2022-03-02 16:01:59
  * @* : 博虹出品，抄袭必究😄
  */
 import React, {Component} from 'react';
@@ -18,9 +18,6 @@ class Index extends Component {
     disabled: false,
     colors: ['#9b63cd', '#e0708c'],
   };
-  componentDidMount() {
-    console.log(this.props, '-------');
-  }
   render() {
     const {colors} = this.props;
     return (

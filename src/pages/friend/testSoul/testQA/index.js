@@ -4,7 +4,7 @@
  * @Author: wanglong
  * @Date: 2022-01-05 11:02:59
  * @LastEditors: wanglong
- * @LastEditTime: 2022-02-18 15:58:10
+ * @LastEditTime: 2022-03-02 15:00:09
  * @* : 博虹出品，抄袭必究😄
  */
 import React, {Component} from 'react';
@@ -58,9 +58,7 @@ export default class Index extends Component {
       // 最后一个题目选择完成
       const answers = this.ansList.join(',');
       friendsQuestionAns(this.props.route.params.qid, {answers}).then(res => {
-        // this.props.navigate
-        // console.log(this.props.navigation);
-        this.props.navigation.replace('TestResult');
+        this.props.navigation.replace('TestResult', res.data);
       });
     } else {
       this.setState({currentIndex: currentIndex + 1});
