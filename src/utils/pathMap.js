@@ -1,7 +1,7 @@
 /**
  * 接口基地址
  */
-export const BASE_URI = 'http://192.168.11.64:9089';
+export const BASE_URI = 'http://192.168.11.183:9089';
 
 /**
  *  登录 获取验证码

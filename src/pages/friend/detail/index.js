@@ -4,7 +4,7 @@
  * @Author: wanglong
  * @Date: 2022-03-03 09:38:56
  * @LastEditors: wanglong
- * @LastEditTime: 2022-03-04 19:12:07
+ * @LastEditTime: 2022-03-09 15:58:26
  * @* : 博虹出品，抄袭必究😄
  */
 import React, {Component} from 'react';
@@ -17,6 +17,7 @@ import {friendsPersonalInfo} from '~/api/friends';
 import {pxToDp} from '~/utils/stylesKits';
 import {BASE_URI} from '~/utils/pathMap';
 import IconFont from '~/components/IconFont';
+import GButton from '~/components/GButton';
 
 export default class Index extends Component {
   state = {
@@ -148,6 +149,17 @@ export default class Index extends Component {
             </View>
           </View>
           {/* 1.0 用户个人信息 结束 */}
+          {/* 1.0 动态-聊一下 开始 */}
+          <View style={{}}>
+            <View>
+              <Text>动态</Text>
+              <Text>3</Text>
+            </View>
+            <View>
+              <GButton>聊一下</GButton>
+            </View>
+          </View>
+          {/* 1.0 动态-聊一下 结束 */}
         </View>
       </HeaderImageScrollView>
     );
